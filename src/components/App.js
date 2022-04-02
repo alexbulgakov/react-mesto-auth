@@ -17,6 +17,7 @@ import { Route } from "react-router-dom";
 import { Switch } from 'react-router-dom';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -28,6 +29,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [fail, setFail] = useState(false);
 
   useEffect(() => {
     api.getUserInfo()
@@ -151,6 +155,8 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsDeletePopupOpen(false);
     setSelectedCard({ name: '', link: '' });
+    setIsInfoTooltipOpen(false);
+    setFail(false);
   }
 
   return (
@@ -185,6 +191,13 @@ function App() {
         </LoadingContext.Provider>
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          submitted={submitted}
+          failed={fail}
+        />
 
         <Route path='/signin'>
           <Login />
