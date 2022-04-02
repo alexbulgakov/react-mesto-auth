@@ -35,7 +35,13 @@ class Main extends React.Component {
                 <section className="elements">
                     <ul className="elements__list">
                         {this.props.cards.map((card) => (
-                            <Card currentCard={card} key={card._id} onCardClick={this.props.onCardClick} onCardLike={this.props.onCardLike} onCardDelete={this.props.onCardDelete}/>
+                            <Card
+                                currentCard={card}
+                                key={card._id}
+                                onCardClick={this.props.onCardClick}
+                                onCardLike={this.props.onCardLike}
+                                onConfirmDelete={this.props.onConfirmDelete}
+                            />
                         ))}
                     </ul>
                 </section>

@@ -11,11 +11,13 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { defaultUser } from '../utils/utils';
 import { LoadingContext } from '../contexts/LoadingContext';
 import AddPlacePopup from './AddPlacePopup';
+import ConfirmDeletePopup from './ConfirmDeletePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: '', link: '' });
   const [currentUser, setCurrentUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
@@ -67,15 +69,26 @@ function App() {
       });
   }
 
-  function handleCardDelete(card) {
+  function handleCardDelete(e) {
+    e.preventDefault();
+    
     const { id } = selectedCard;
-    api.deleteCard(card._id)
+    api.deleteCard(id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== id));
       })
       .catch((error) =>
         console.log(error)
+      )
+      .finally(() =>
+        setLoading(false)
       );
+    setIsDeletePopupOpen(false);
+  }
+
+  function handleConfirmDelete(id) {
+    setIsDeletePopupOpen(!isDeletePopupOpen);
+    setSelectedCard({ ...selectedCard, id });
   }
 
   function handleUpdateUser(info) {
@@ -130,6 +143,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsDeletePopupOpen(false);
     setSelectedCard({ name: '', link: '' });
   }
 
@@ -145,6 +159,7 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          onConfirmDelete={handleConfirmDelete}
           cards={cards} />
 
         <LoadingContext.Provider value={loading}>
@@ -164,6 +179,12 @@ function App() {
             isOpen={isAddPlacePopupOpen}
             onClosePopups={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
+          />
+
+          <ConfirmDeletePopup
+            isOpen={isDeletePopupOpen}
+            onClose={closeAllPopups}
+            onCardDelete={handleCardDelete}
           />
         </LoadingContext.Provider>
 

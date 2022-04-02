@@ -23,11 +23,21 @@ function Card(props) {
     return (
         <li className="element">
             <img onClick={handleClick} className="element__picture" src={props.currentCard.link} alt={props.currentCard.name}></img>
-            <button className={cardDeleteButtonClassName} type="button" onClick={handleDeleteClick}></button>
+            <button
+                className={cardDeleteButtonClassName}
+                type="button"
+                onClick={props.onConfirmDelete.bind(this, props.currentCard._id)}
+            >
+            </button>
             <div className="element__location-box">
                 <h2 className="element__location">{props.currentCard.name}</h2>
                 <div className="element__like-box">
-                    <button className={cardLikeButtonClassName} type="button" onClick={props.onCardLike.bind(this, props.currentCard)}></button>
+                    <button
+                        className={cardLikeButtonClassName}
+                        type="button"
+                        onClick={props.onCardLike.bind(this, props.currentCard)}
+                    >
+                    </button>
                     <span className="element__likes-counter">{props.currentCard.likes.length}</span>
                 </div>
             </div>
