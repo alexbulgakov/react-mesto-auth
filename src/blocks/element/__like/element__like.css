@@ -1,0 +1,14 @@
+.element__like {
+    width: 22px;
+    height: 19px;
+    -ms-flex-item-align: end;
+    align-self: flex-start;
+    transition: opacity .1s linear;
+    cursor: pointer;
+    background: url(../../../images/like.svg);
+    border: none;
+}
+
+.element__like:hover {
+    opacity: .5;
+}

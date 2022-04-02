@@ -1,0 +1,8 @@
+.popup__location-name {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 1.21;
+}
