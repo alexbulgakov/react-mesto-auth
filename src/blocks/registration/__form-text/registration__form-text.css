@@ -1,0 +1,11 @@
+.registration__form-text {
+    background-color: rgba(0, 0, 0, 1);
+    color: #CCCCCC;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.21;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 13px;
+    outline: none;
+}

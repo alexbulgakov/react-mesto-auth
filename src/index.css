@@ -49,3 +49,9 @@
 @import url(./blocks/popup-form/__button/_inactive/popup-form__button_inactive.css);
 @import url(./blocks/popup-form/__input-container/_type/popup-form__input-container_type_delete.css);
 @import url(./blocks/popup-form/__button/_type/popup-form__button_type_delete.css);
+@import url(./blocks/registration/registration.css);
+@import url(./blocks/registration/__form-text/registration__form-text.css);
+@import url(./blocks/registration/__form-container/registration__form-container.css);
+@import url(./blocks/registration/__form-heading/registration__form-heading.css);
+@import url(./blocks/registration/__form-button/registration__form-button.css);
+@import url(./blocks/registration/__form-login-button/registration__form-login-button.css);

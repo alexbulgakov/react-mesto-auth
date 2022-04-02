@@ -12,6 +12,11 @@ import { defaultUser } from '../utils/utils';
 import { LoadingContext } from '../contexts/LoadingContext';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmDeletePopup from './ConfirmDeletePopup';
+import Login from './Login';
+import { Route } from "react-router-dom";
+import { Switch } from 'react-router-dom';
+import Register from './Register';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -22,6 +27,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api.getUserInfo()
@@ -71,7 +77,7 @@ function App() {
 
   function handleCardDelete(e) {
     e.preventDefault();
-    
+
     const { id } = selectedCard;
     api.deleteCard(id)
       .then(() => {
@@ -152,16 +158,6 @@ function App() {
       <div className="root">
         <Header />
 
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          onConfirmDelete={handleConfirmDelete}
-          cards={cards} />
-
         <LoadingContext.Provider value={loading}>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -190,7 +186,35 @@ function App() {
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-        <Footer />
+        <Route path='/signin'>
+          <Login />
+        </Route>
+
+        <Route path='/signup'>
+          <Register />
+        </Route>
+
+        <Switch>
+          <ProtectedRoute
+            exact
+            path='/'
+            loggedIn={loggedIn}
+            component={Main}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+            onConfirmDelete={handleConfirmDelete}
+            cards={cards}
+          >
+            <Main />
+            <Footer />
+          </ProtectedRoute>
+        </Switch>
+
+
       </div>
 
     </CurrentUserContext.Provider>
