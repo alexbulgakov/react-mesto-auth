@@ -1,37 +1,19 @@
-import PopupWithForm from './PopupWithForm';
 import successIcon from '../images/infotooltip_success.svg'
 import failureIcon from '../images/infotooltip_failure.svg'
 
-function InfoTooltip(props) {
-    if (props.failed) {
-        return (
-            <PopupWithForm
-                isOpen={props.isOpen}
-                onClose={props.onClose}
-                submitted={props.submitted}
-                name="popup__form"
-            >
-                <img src={failureIcon} className="popup__infotool-image" alt="Fail" />
-                <h2 className={`form-heading popup__form-heading_centered`}>
-                    Что-то пошло не так! Попробуйте ещё раз.
-                </h2>
-            </PopupWithForm>
-        );
-    } else {
-        return (
-            <PopupWithForm
-                isOpen={props.isOpen}
-                onClose={props.onClose}
-                submitted={props.submitted}
-                name="popup__form"
-            >
-                <img src={successIcon} className="popup__infotool-image" alt="Success" />
-                <h2 className={`form-heading popup__form-heading_centered`}>
-                    Вы успешно зарегистрировались!
-                </h2>
-            </PopupWithForm>
-        );
-    }
+function InfoTooltip({ isOpen, successResult, onClose, successMessage, failMessage }) {
+    return (
+        <section className={`popup popup_type_info-tooltip ${isOpen && 'popup_opened'}`}>
+            <div className="popup__overlay" onClick={onClose}></div>
+            <div className="popup__container">
+                <button className="popup__close-icon" type="button" onClick={onClose}></button>
+                <figure className="popup__img-response">
+                    <img alt="" src={successResult ? successIcon : failureIcon} className="popup__response-image" />
+                    <p className="popup__response">{successResult ? successMessage : failMessage}</p>
+                </figure>
+            </div>
+        </section>
+    );
 }
 
 export default InfoTooltip;
