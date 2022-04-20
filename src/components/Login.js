@@ -18,7 +18,7 @@ function Login(props) {
 
     return (
         <section className='authentication'>
-            <form className='form form_type_login' onSubmit={handleSubmit} name='login' noValidate>
+            <form className='form form_type_login' onSubmit={handleSubmit} name='login'>
                 <h2 className="form__title form__title_type_auth">Вход</h2>
                 <fieldset className="form__container form__container_type_auth">
                     <input

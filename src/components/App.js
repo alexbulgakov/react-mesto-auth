@@ -31,7 +31,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState();
-  const [submitted, setSubmitted] = useState(false);
   const [fail, setFail] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
@@ -39,7 +38,25 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-  }, [])
+    if (!loggedIn) {
+      return
+    }
+    api.getUserInfo()
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    api.getCards()
+      .then(res => {
+        setCards(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -144,16 +161,16 @@ function App() {
 
     if (token) {
       auth.getContent(token)
-      .then((res) => {
-        if (res) {
-          const userEmail = res.data.email;
+        .then((res) => {
+          if (res) {
+            const userEmail = res.data.email;
 
-          setLoggedIn(true);
-          setUserEmail(userEmail);
-          history.push('/');
-        }
-      })
-      .catch((err) => console.log(err))
+            setLoggedIn(true);
+            setUserEmail(userEmail);
+            history.push('/');
+          }
+        })
+        .catch((err) => console.log(err))
     };
   };
 

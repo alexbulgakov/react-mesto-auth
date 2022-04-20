@@ -18,7 +18,7 @@ function Register(props) {
 
     return (
         <section className='authentication'>
-            <form className='form form_type_register' name='register' onSubmit={handleSubmit} noValidate>
+            <form className='form form_type_register' name='register' onSubmit={handleSubmit}>
                 <h2 className="form__title form__title_type_auth">Регистрация</h2>
                 <fieldset className="form__container form__container_type_auth">
                     <input
